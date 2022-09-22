@@ -1,5 +1,5 @@
 import { render, screen, act, fireEvent } from '@testing-library/react';
-import { mock } from 'jest-mock-extended';
+//import { mock } from 'jest-mock-extended';
 import { AuthStore } from '../AuthStore';
 // given that there is no data in the text throw an error
 // if bad data (invalid email) is entered throw an error
@@ -7,7 +7,7 @@ import { AuthStore } from '../AuthStore';
 
 import LoginScreen from "./LoginScreen";
 import { AuthProvider } from '../AuthContext';
-import { AUTH } from '../apis';
+//import { AUTH } from '../apis';
 
 describe('LoginScreen', () => {
     it('not calling an api', async () => {
@@ -44,8 +44,8 @@ describe('LoginScreen', () => {
         const email = 'raziz@guidedchoice.com'
         const password = 'complicatedPass'
 
-        const emailInput = screen.getByTestId('email').querySelector('input');
-        const passwordInput = screen.getByTestId('password').querySelector('input');
+        const emailInput = screen.getByTestId('email');
+        const passwordInput = screen.getByTestId('password');
 
         await fireEvent.change(emailInput, { target: { value: email } });
         await fireEvent.change(passwordInput, { target: { value: password } });

@@ -2,7 +2,7 @@ import { Button, Input, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import { useAuthContext } from '../AuthContext'
 
-const TwoFAScreen = () => {
+export const TwoFAScreen = () => {
   const authStore = useAuthContext()
   const [code, setCode] = useState('')
   const [error, setError] = useState<string | undefined>(undefined)
