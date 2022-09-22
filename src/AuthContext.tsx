@@ -6,6 +6,8 @@ export const AuthContext = createContext<null | AuthStore>(null);
 
 interface AuthContextProps {
     authStore: AuthStore;
+    children: React.ReactNode;
+
 }
 
 export const AuthProvider: React.FC<AuthContextProps>  = ({ children, authStore }) => {

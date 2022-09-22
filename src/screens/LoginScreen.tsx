@@ -28,6 +28,7 @@ const LoginScreen = () => {
         value={username}
         onChange={(e) => setUserName(e.target.value)}
         required={true}
+        id='username'
       />
       <Input
         style={{ marginTop: '8px' }}
@@ -35,6 +36,7 @@ const LoginScreen = () => {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         required={true}
+        id='password'
       />
       <Button style={{ marginTop: '8px' }} onClick={onSubmit}>
         Login
