@@ -5,16 +5,13 @@ import { useToasts } from 'react-toast-notifications'
 const LoginScreen = () => {
   const [username, setUserName] = useState('Username')
   const [password, setPassword] = useState('Password')
-
-  const { addToast } = useToasts()
+  const [error, setError] = useState<string | undefined>(undefined)
 
   const onSubmit = () => {
     try {
       throw new Error('Nope')
     } catch (e) {
-      addToast((e as Error).message || 'Something went wrong', {
-        appearance: 'error'
-      })
+      setError((e as Error).message)
     }
   }
 
