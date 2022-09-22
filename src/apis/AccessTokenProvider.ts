@@ -1,5 +1,4 @@
 import { BehaviorSubject, Observable } from 'rxjs';
-import * as SecureStore from 'expo-secure-store';
 import jwtDecode from 'jwt-decode';
 
 const ACCESS_TOKEN_KEY = 'ACCESS_TOKEN';
@@ -33,7 +32,7 @@ class AccessTokenProvider {
   async setAccessToken(token: AccessToken | null): Promise<void> {
     try {
       if (token === null) {
-        await SecureStore.deleteItemAsync(ACCESS_TOKEN_KEY);
+        window.localStorage.removeItem(ACCESS_TOKEN_KEY);
         this.accessToken.next(null);
         return;
       }
@@ -44,9 +43,7 @@ class AccessTokenProvider {
         return;
       }
 
-      await SecureStore.setItemAsync(ACCESS_TOKEN_KEY, JSON.stringify(tokenValid), {
-        keychainAccessible: SecureStore.WHEN_UNLOCKED,
-      });
+      window.localStorage.setItem(ACCESS_TOKEN_KEY, JSON.stringify(tokenValid));
 
       this.accessToken.next(tokenValid);
     } catch (e) {
@@ -57,21 +54,19 @@ class AccessTokenProvider {
 
   async setTempAccessToken(tempToken: string | null): Promise<void> {
     if (tempToken === null) {
-      await SecureStore.deleteItemAsync(ACCESS_TOKEN_PRE_TWO_FACTOR);
+      await window.localStorage.removeItem(ACCESS_TOKEN_PRE_TWO_FACTOR);
     } else {
-      await SecureStore.setItemAsync(ACCESS_TOKEN_PRE_TWO_FACTOR, tempToken, {
-        keychainAccessible: SecureStore.WHEN_UNLOCKED,
-      });
+      window.localStorage.setItem(ACCESS_TOKEN_PRE_TWO_FACTOR, tempToken);
     }
   }
 
   async getTempAccessToken(): Promise<string | null> {
-    return SecureStore.getItemAsync(ACCESS_TOKEN_PRE_TWO_FACTOR);
+    return window.localStorage.getItem(ACCESS_TOKEN_PRE_TWO_FACTOR);
   }
 
   private async getAccessTokenAsync(): Promise<AccessToken | null> {
     try {
-      const storedToken = await SecureStore.getItemAsync(ACCESS_TOKEN_KEY);
+      const storedToken = window.localStorage.getItem(ACCESS_TOKEN_KEY);
       if (storedToken !== null && storedToken !== '') {
         const parsedToken = JSON.parse(storedToken) as AccessToken;
         return this.returnTokenIfDecodable(parsedToken);
@@ -88,7 +83,7 @@ class AccessTokenProvider {
       jwtDecode<{ exp: number }>(token.refreshToken);
       return token;
     } catch (error) {
-      await SecureStore.deleteItemAsync(ACCESS_TOKEN_KEY);
+      await window.localStorage.removeItem(ACCESS_TOKEN_KEY);
       return null;
     }
   }

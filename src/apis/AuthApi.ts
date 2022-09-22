@@ -66,10 +66,10 @@ export interface ForgotPasswordResetRest {
   password?: string;
 }
 
-export default class AuthApi extends ApiBase {
-  /* constructor(axios: AxiosInstance) {
+export class AuthApi extends ApiBase {
+   constructor(axios: AxiosInstance) {
     super(axios);
-  } */
+  } 
 
   registerUser(request: RegisterUserRequest): Promise<AxiosResponse> {
     return this.axios.post('mobile/new-register', request);
