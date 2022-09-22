@@ -5,71 +5,7 @@ import { AccessTokenProvider } from './AccessTokenProvider';
 //import { AppleRequestResponse } from '@invertase/react-native-apple-authentication';
 //import { User as GoogleLoginRequest } from '@react-native-google-signin/google-signin';
 
-export interface AuthTwoFactorData {
-    authenticationMethod?: TwoFactorTypeEnum;
-    email?: string;
-    mobilePhone?: string;
-  }
-// eslint-disable-next-line no-shadow
-export enum TwoFactorTypeEnum {
-  Email = 'email',
-  'Mobile Phone' = 'phone',
-}
-
-export interface RegisterUserRequest {
-  birthdate?: string;
-  emailAddress?: string;
-  firstName?: string;
-  lastName?: string;
-  password?: string;
-}
-
-export interface TwoFactorRequest {
-  code: string;
-  twoFactorType: TwoFactorTypeEnum;
-}
-
-export interface AuthTwoFactorResultRest {
-  defaultSelection?: boolean;
-  id?: number;
-  info?: string;
-  twoFactorType?: TwoFactorTypeEnum;
-}
-
-export interface LoginRequest {
-  username?: string;
-  password: string;
-}
-
-export interface LoginResultRest {
-  twoFactorEnabled?: boolean;
-  defaultTwoFactor?: LoginTwoFactorData;
-  twoFactorAlternatives?: Array<LoginTwoFactorData>;
-}
-
-export interface LoginTwoFactorData {
-  id?: number;
-  twoFactorType?: TwoFactorTypeEnum;
-  info?: string;
-}
-
-export interface ChangePasswordRest {
-  password?: string;
-}
-
-export interface ForgotPasswordRest {
-  username?: string;
-  birthDate?: Date;
-}
-
-export interface ForgotPasswordResetRest {
-  password?: string;
-}
-
-export class AuthApi extends ApiBase {
-   constructor(axios: AxiosInstance) {
-    super(axios);
-  } 
+export default class AuthApi extends ApiBase {
 
   registerUser(request: RegisterUserRequest): Promise<AxiosResponse> {
     return this.axios.post('mobile/new-register', request);
@@ -171,4 +107,65 @@ export class AuthApi extends ApiBase {
   setAccessTokenAsync(token: string | null): Promise<void> {
     return AccessTokenProvider.setTempAccessToken(token);
   }
+}
+
+export interface AuthTwoFactorData {
+  authenticationMethod?: TwoFactorTypeEnum;
+  email?: string;
+  mobilePhone?: string;
+}
+// eslint-disable-next-line no-shadow
+export enum TwoFactorTypeEnum {
+Email = 'email',
+'Mobile Phone' = 'phone',
+}
+
+export interface RegisterUserRequest {
+birthdate?: string;
+emailAddress?: string;
+firstName?: string;
+lastName?: string;
+password?: string;
+}
+
+export interface TwoFactorRequest {
+code: string;
+twoFactorType: TwoFactorTypeEnum;
+}
+
+export interface AuthTwoFactorResultRest {
+defaultSelection?: boolean;
+id?: number;
+info?: string;
+twoFactorType?: TwoFactorTypeEnum;
+}
+
+export interface LoginRequest {
+username?: string;
+password: string;
+}
+
+export interface LoginResultRest {
+twoFactorEnabled?: boolean;
+defaultTwoFactor?: LoginTwoFactorData;
+twoFactorAlternatives?: Array<LoginTwoFactorData>;
+}
+
+export interface LoginTwoFactorData {
+id?: number;
+twoFactorType?: TwoFactorTypeEnum;
+info?: string;
+}
+
+export interface ChangePasswordRest {
+password?: string;
+}
+
+export interface ForgotPasswordRest {
+username?: string;
+birthDate?: Date;
+}
+
+export interface ForgotPasswordResetRest {
+password?: string;
 }

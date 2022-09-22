@@ -1,9 +1,7 @@
 import axios from 'axios';
 // import Api from './Api';
-import {AuthApi} from './AuthApi';
-import pkg from '../../package.json';
-import ApiBase from './ApiBase';
-
+import AuthApi from './AuthApi';
+import Api from './Api';
 
 export const buildVariables = {
     domainUrl: 'gw-guidedchoice.com',
@@ -26,7 +24,7 @@ const AUTH = new AuthApi(
   }),
 );
 
-const API = new ApiBase(
+const API = new Api(
   axios.create({
     baseURL: API_URL,
     timeout: 10000, // 10 seconds

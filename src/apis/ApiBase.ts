@@ -4,7 +4,6 @@ import * as AxiosLogger from 'axios-logger';
 import { RequestLogConfig, ResponseLogConfig } from 'axios-logger/lib/common/types';
 import axiosRetry from 'axios-retry';
 import jwtDecode from 'jwt-decode';
-import { AUTH } from './instances';
 import { BehaviorSubject, firstValueFrom, Observable } from 'rxjs';
 import { AccessTokenProvider } from './AccessTokenProvider';
 import { Mutex } from 'await-semaphore';
@@ -168,17 +167,17 @@ export default class ApiBase {
             return this.axios.request(error.config);
           }
 
-          const response = await AUTH.refreshToken(token.refreshToken);
-          if (response.status !== 200) {
-            await AccessTokenProvider.setAccessToken(null);
-            release();
-            return Promise.reject(error);
-          }
+          // const response = await AUTH.refreshToken(token.refreshToken);
+          // if (response.status !== 200) {
+          //   await AccessTokenProvider.setAccessToken(null);
+          //   release();
+          //   return Promise.reject(error);
+          // }
 
-          const newToken = response.headers.authorization?.replace('Bearer', '');
-          AccessTokenProvider.setAccessToken({ ...token, accessToken: newToken });
-          error.config.headers.Authorization = `Bearer ${newToken}`;
-          release();
+          // const newToken = response.headers.authorization?.replace('Bearer', '');
+          // AccessTokenProvider.setAccessToken({ ...token, accessToken: newToken });
+          // error.config.headers.Authorization = `Bearer ${newToken}`;
+          // release();
           return this.axios.request(error.config);
         } catch {
           AccessTokenProvider.setAccessToken(null);
