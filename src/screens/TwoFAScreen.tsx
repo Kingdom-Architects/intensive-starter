@@ -1,20 +1,29 @@
 import { Button, Input, Typography } from '@mui/material'
 import React, { useState } from 'react'
+import { useAuthContext } from '../AuthContext'
 
 const TwoFAScreen = () => {
+  const authStore = useAuthContext()
   const [code, setCode] = useState('')
   const [error, setError] = useState<string | undefined>(undefined)
 
   const onSubmit = async () => {
     try {
-      throw new Error('invalid code')
+      if (code.length === 6) {
+        await authStore.attemptLoginTwoFactor(code)
+      }
     } catch (e) {
       setError((e as Error).message)
     }
   }
 
   return (
-    <form>
+    <form
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center'
+      }}>
       <Input
         style={{ marginTop: '8px' }}
         placeholder='0'
@@ -23,6 +32,11 @@ const TwoFAScreen = () => {
         required={true}
         data-testid='code'
       />
+      <Button style={{ marginTop: '8px' }} type='submit' onClick={onSubmit}>
+        Continue
+      </Button>
     </form>
   )
 }
+
+export default TwoFAScreen
