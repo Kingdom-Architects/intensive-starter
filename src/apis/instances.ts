@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Api from './Api';
 import AuthApi from './AuthApi';
-import pkg from '../../package.json';
+//import pkg from '../../package.json';
 
 
 export const buildVariables = {

@@ -1,4 +1,4 @@
-import { AxiosInstance, AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
 //import { AuthTwoFactorData } from '../account-settings/AccountSettingsTypes';
 import ApiBase from './ApiBase';
 import { AccessTokenProvider } from './AccessTokenProvider';

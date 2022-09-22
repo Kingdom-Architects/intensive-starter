@@ -1,6 +1,5 @@
 import { Button, Input, Typography } from '@mui/material'
 import React, { useState } from 'react'
-import { useToasts } from 'react-toast-notifications'
 
 const LoginScreen = () => {
   const [username, setUserName] = useState('')
@@ -28,12 +27,14 @@ const LoginScreen = () => {
         placeholder='Username'
         value={username}
         onChange={(e) => setUserName(e.target.value)}
+        required={true}
       />
       <Input
         style={{ marginTop: '8px' }}
         placeholder='Password'
         value={password}
         onChange={(e) => setPassword(e.target.value)}
+        required={true}
       />
       <Button style={{ marginTop: '8px' }} onClick={onSubmit}>
         Login

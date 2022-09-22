@@ -1,9 +1,9 @@
 import jwtDecode from 'jwt-decode';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
-import { delay, distinctUntilChanged, filter, map } from 'rxjs/operators';
+import { delay, distinctUntilChanged, map } from 'rxjs/operators';
 import { AccessToken, AccessTokenProvider } from './apis/AccessTokenProvider';
 import { LoginResultRest, RegisterUserRequest, TwoFactorTypeEnum } from './apis/AuthApi';
-import { API, AUTH } from './apis/instances';
+import { AUTH } from './apis/instances';
 //import { APPLICATION_EVENTS_STORE_DATA_KEY } from '../client-metrics/ClientMetricsStore';
 //import { ForgotPasswordData } from '../forgot-password/ForgotPasswordTypes';
 //import { LOGGING_APPLICATION_STORE_DATA_KEY } from '../server-side-logging/ServerSideLoggingTypes';
