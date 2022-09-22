@@ -1,21 +1,25 @@
 import { Button, Input, Typography } from '@mui/material'
 import React, { useState } from 'react'
+import { useAuthContext } from '../AuthContext'
 
 const LoginScreen = () => {
-  const [username, setUserName] = useState('')
-  const [password, setPassword] = useState('')
+  const authStore = useAuthContext()
+  const [email, setEmail] = useState()
+  const [password, setPassword] = useState()
   const [error, setError] = useState<string | undefined>(undefined)
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     try {
-      throw new Error('Nope')
+      if (email && password) {
+        await authStore.attemptLogin(email, password)
+      }
     } catch (e) {
       setError((e as Error).message)
     }
   }
 
   return (
-    <div
+    <form
       style={{
         display: 'flex',
         flexDirection: 'column',
@@ -24,11 +28,11 @@ const LoginScreen = () => {
       <Typography style={{ marginTop: '8px' }}>3Nickels Login</Typography>
       <Input
         style={{ marginTop: '8px' }}
-        placeholder='Username'
-        value={username}
-        onChange={(e) => setUserName(e.target.value)}
+        placeholder='Email'
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
         required={true}
-        id='username'
+        data-testid='email'
       />
       <Input
         style={{ marginTop: '8px' }}
@@ -36,12 +40,12 @@ const LoginScreen = () => {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         required={true}
-        id='password'
+        data-testid='password'
       />
-      <Button style={{ marginTop: '8px' }} onClick={onSubmit}>
+      <Button style={{ marginTop: '8px' }} type='submit' onClick={onSubmit}>
         Login
       </Button>
-    </div>
+    </form>
   )
 }
 

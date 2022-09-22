@@ -44,8 +44,8 @@ describe('LoginScreen', () => {
         const email = 'raziz@guidedchoice.com'
         const password = 'complicatedPass'
 
-        const emailInput = screen.getByTestId('email');
-        const passwordInput = screen.getByTestId('password');
+        const emailInput = screen.getByTestId('email').querySelector('input');
+        const passwordInput = screen.getByTestId('password').querySelector('input');
 
         await fireEvent.change(emailInput, { target: { value: email } });
         await fireEvent.change(passwordInput, { target: { value: password } });
