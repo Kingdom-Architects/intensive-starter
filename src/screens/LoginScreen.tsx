@@ -3,8 +3,8 @@ import React, { useState } from 'react'
 import { useToasts } from 'react-toast-notifications'
 
 const LoginScreen = () => {
-  const [username, setUserName] = useState('Username')
-  const [password, setPassword] = useState('Password')
+  const [username, setUserName] = useState('')
+  const [password, setPassword] = useState('')
   const [error, setError] = useState<string | undefined>(undefined)
 
   const onSubmit = () => {
@@ -25,11 +25,13 @@ const LoginScreen = () => {
       <Typography style={{ marginTop: '8px' }}>3Nickels Login</Typography>
       <Input
         style={{ marginTop: '8px' }}
+        placeholder='Username'
         value={username}
         onChange={(e) => setUserName(e.target.value)}
       />
       <Input
         style={{ marginTop: '8px' }}
+        placeholder='Password'
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
