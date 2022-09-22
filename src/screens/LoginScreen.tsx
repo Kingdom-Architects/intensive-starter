@@ -4,8 +4,8 @@ import { useAuthContext } from '../AuthContext'
 
 const LoginScreen = () => {
   const authStore = useAuthContext()
-  const [email, setEmail] = useState()
-  const [password, setPassword] = useState()
+  const [email, setEmail] = useState<string | undefined>()
+  const [password, setPassword] = useState<string | undefined>()
   const [error, setError] = useState<string | undefined>(undefined)
 
   const onSubmit = async () => {
