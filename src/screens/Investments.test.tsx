@@ -1,13 +1,11 @@
-import { render, screen, act, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { mock } from 'jest-mock-extended';
 import { AuthStore } from '../AuthStore';
-
 import Investments from "./Investments";
 import { AuthProvider } from '../AuthContext';
 import { API } from '../apis';
 import { AxiosInstance } from 'axios';
 import { InvestmentAccountApi } from '../apis/InvestmentAccountApi';
-import { wait } from '../utils';
 
 describe('Investments Screen', () => {
     const axios = mock<AxiosInstance>();
@@ -30,7 +28,6 @@ describe('Investments Screen', () => {
                 <Investments />
             </AuthProvider>
         );
-        // expect screen to not render improperly when 403 is sent
         expect(await screen.findByText('No accounts')).toBeInTheDocument();
     });
     it('When we have 0 accounts and response is 200', async () => {
@@ -50,10 +47,7 @@ describe('Investments Screen', () => {
                 <Investments />
             </AuthProvider>
         );
-        //await wait(200);
         expect(await screen.findByText('No accounts')).toBeInTheDocument();
-        // expect investments length to be 0 and no errors
-        // expect()
     });
     it('When we have 1 or more accounts...', async () => {
         const authStore = new AuthStore();

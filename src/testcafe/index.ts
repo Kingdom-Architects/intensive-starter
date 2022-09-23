@@ -199,6 +199,9 @@ test("Impersonate", async (t) => {
 
   await t.navigateTo(`http://127.0.0.1:3000`);
   await impersonate(token);
-  await t.navigateTo(`http://127.0.0.1:3000/investments`);
-  await t.expect(Selector("div")).ok();
+  await t.navigateTo(`http://127.0.0.1:3000/investments`).wait(500);
+  const investments = Selector(".investments")
+  await t.expect(investments.count).eql(2);
+  await t.expect(investments.nth(0).textContent).eql('invest1');
+  await t.expect(investments.nth(1).textContent).eql('invest2');
 });

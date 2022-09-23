@@ -20,7 +20,7 @@ const Investments = () => {
     investments.length ? 
         <div>
             {investments.map((investment) => (
-            <div>
+            <div key={investment.id} className="investments">
                 <Typography>{investment.name}</Typography>
             </div>
             ))}
