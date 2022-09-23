@@ -7,6 +7,7 @@ import { ContactInfoApi } from './ContactInfoApi';
 import { DependentApi } from './DependentApi';
 import { UserConfigApi } from './UserConfigApi';
 import { TermsAndConditionsApi } from './TermsAndConditionsApi';
+import { InvestmentAccountApi } from './InvestmentAccountApi';
 
 export default class Api extends ApiBase {
 
@@ -20,6 +21,7 @@ export default class Api extends ApiBase {
     this.dependents = new DependentApi(this.axios);
     this.userConfig = new UserConfigApi(this.axios);
     this.termsAndConditions = new TermsAndConditionsApi(this.axios);
+    this.investments = new InvestmentAccountApi(this.axios);
   }
 
   account: AccountApi;
@@ -29,6 +31,7 @@ export default class Api extends ApiBase {
   dependents: DependentApi;
   readonly userConfig: UserConfigApi;
   readonly termsAndConditions: TermsAndConditionsApi;
+  readonly investments: InvestmentAccountApi;
 /*   account: AccountApi;
   person: PersonApi;
   spouse: SpouseApi;
