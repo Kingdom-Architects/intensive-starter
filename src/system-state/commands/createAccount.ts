@@ -4,6 +4,7 @@ import Storage from '../Storage';
 import { API, AUTH } from "../../apis";
 import { TwoFactorTypeEnum } from "../../apis/AuthApi";
 import { PersonRest } from "../../apis/PersonApi";
+import { AccessToken, AccessTokenProvider } from "../../apis/AccessTokenProvider";
 
 interface RegisterProps {
   firstName: string;
@@ -83,6 +84,9 @@ const register: Command<RegisterProps> = async (instruction: CommandInstruction<
     return;
   }
 
+  const tempAuthHeader = response.headers.authorization;
+  AccessTokenProvider.setTempAccessToken(tempAuthHeader.replace("Bearer ", ""))
+
   const { data: verificationCode } = await AUTH.retrieveVerificationCode();
   const verifiedResponse = await AUTH.validateAccount({ code: verificationCode, twoFactorType: TwoFactorTypeEnum.Email });
 
@@ -93,9 +97,11 @@ const register: Command<RegisterProps> = async (instruction: CommandInstruction<
   const authHeader = verifiedResponse.headers.authorization;
   const refreshAuthHeader = verifiedResponse.headers['authorization-refresh'];
 
+
   const token = authHeader.replace("Bearer ", "");
   const refreshToken = refreshAuthHeader.replace("Bearer ", "");
 
+  await AccessTokenProvider.setAccessToken(new AccessToken(token, refreshToken));
   storage.set("accessToken", id, { token, refreshToken });
 };
 
