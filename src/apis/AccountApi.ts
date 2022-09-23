@@ -1,7 +1,4 @@
 import { AxiosInstance, AxiosResponse } from 'axios';
-//import { InvestmentPreferencesEnum } from '../constants/investment-preferences';
-//import { ProductTypeEnum } from '../constants/product-types';
-//import { UsStatesEnum } from '../constants/us-states';
 
 export class AccountApi {
   constructor(private axios: AxiosInstance) {}
@@ -42,8 +39,5 @@ export interface AccountRest {
   participantId?: number;
   planId?: number;
   pptClass?: string;
-  //productId?: ProductTypeEnum;
   startAdviceDate?: string;
-  //taxState?: UsStatesEnum;
-  //investmentPreference?: InvestmentPreferencesEnum;
 }

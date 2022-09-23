@@ -11,6 +11,17 @@ export default class AuthApi extends ApiBase {
     return this.axios.post('mobile/new-register', request);
   }
 
+  retrieveVerificationCode(): Promise<AxiosResponse> {
+    return this.axios.get(
+      `mobile/new-register/verification-code`,
+      {
+        headers: {
+          useTempToken: true,
+        },
+      },
+    );
+  }
+
   validateAccount(request: TwoFactorRequest): Promise<AxiosResponse> {
     return this.axios.post(
       `mobile/new-register/verify?verificationCode=${request.code}`,
