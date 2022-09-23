@@ -38,7 +38,7 @@ describe('TwoFAScreen', () => {
         );
 
         const twoFA = '123456'
-
+        /* eslint-disable-next-line */
         const twoFAInput = screen.getByTestId('code').querySelector('input');
 
         await fireEvent.change(twoFAInput, { target: { value: twoFA } });

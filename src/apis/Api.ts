@@ -31,7 +31,7 @@ export default class Api extends ApiBase {
   dependents: DependentApi;
   readonly userConfig: UserConfigApi;
   readonly termsAndConditions: TermsAndConditionsApi;
-  readonly investments: InvestmentAccountApi;
+  investments: InvestmentAccountApi;
 /*   account: AccountApi;
   person: PersonApi;
   spouse: SpouseApi;

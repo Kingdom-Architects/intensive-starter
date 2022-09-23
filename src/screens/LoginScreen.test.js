@@ -43,10 +43,10 @@ describe('LoginScreen', () => {
 
         const email = 'raziz@guidedchoice.com'
         const password = 'complicatedPass'
-
+        /* eslint-disable */
         const emailInput = screen.getByTestId('email').querySelector('input');
         const passwordInput = screen.getByTestId('password').querySelector('input');
-
+        /* eslint-enable */
         await fireEvent.change(emailInput, { target: { value: email } });
         await fireEvent.change(passwordInput, { target: { value: password } });
 

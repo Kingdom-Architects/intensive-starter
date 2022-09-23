@@ -4,17 +4,7 @@ import { delay, distinctUntilChanged, map } from 'rxjs/operators';
 import { AccessToken, AccessTokenProvider } from './apis/AccessTokenProvider';
 import { LoginResultRest, RegisterUserRequest, TwoFactorTypeEnum } from './apis/AuthApi';
 import { AUTH } from './apis/instances';
-//import { APPLICATION_EVENTS_STORE_DATA_KEY } from '../client-metrics/ClientMetricsStore';
-//import { ForgotPasswordData } from '../forgot-password/ForgotPasswordTypes';
-//import { LOGGING_APPLICATION_STORE_DATA_KEY } from '../server-side-logging/ServerSideLoggingTypes';
-//import { AsyncStorageService } from '../services/AsyncStorageService';
-//import { BiometricService } from '../services/BiometricService';
 import { firstValueFrom } from 'rxjs';
-//import { GoogleSignin } from '@react-native-google-signin/google-signin';
-//import { PlaidStateService } from '../services/PlaidStateService';
-/* mport { NonAdvicedPlaidStore } from '../advice/account-details/PlaidStore';
-import { NonAdvicedRealEstateStore } from '../advice/account-details/real-estate/AdviceRealEstateStore';
-import { ApplicationLogLevelEnum } from '../apis/LoggingApi'; */
 
 export interface IAuthStore {
   isAuthenticated$: Observable<boolean>;
@@ -26,7 +16,6 @@ export class AuthStore implements IAuthStore {
 
   get isAuthenticated$(): Observable<boolean> {
     return combineLatest([this.hasJwtValid$]).pipe(
-      //this.throwIfInitError(),
       map(([isAuth]) => {
         if (!isAuth) {
           console.log('oh no :(')
@@ -39,7 +28,6 @@ export class AuthStore implements IAuthStore {
 
   get hasJwtValid$(): Observable<boolean> {
     return AccessTokenProvider.accessToken$.pipe(
-      //this.throwIfInitError(),
       map((x) => {
         if (typeof x !== 'undefined' && x !== null) {
           return {
@@ -64,17 +52,11 @@ export class AuthStore implements IAuthStore {
 
   get ready$(): Observable<boolean> {
     return combineLatest([this.isAuthenticated$, this.signUpInProgress.pipe(delay(1))]).pipe(
-      //this.throwIfInitError(),
       map(([isAuth, signUpInProgress]) => {
         return isAuth && !signUpInProgress;
       }),
     );
   }
-
-
-  /* private throwIfInitError<T>() {
-    return throwIfInitError<T>(this.initialized$);
-  } */
 
   private async ensureInitialized(): Promise<void> {
     const isInitialized = await firstValueFrom(this.initialized$);
@@ -97,16 +79,13 @@ export class AuthStore implements IAuthStore {
       throw new Error('No access token returned.');
     }
 
-    // token comes back with Bearer included. Stripping it out so it's standard.
     await this.setAuthAccessToken(token.replace('Bearer ', ''));
     return true;
   }
 
   async attemptLogin(username: string, password: string): Promise<LoginResultRest> {
-    // await this.ensureInitialized();
     await this.clearAccessTokens();
     const result = await AUTH.login({ username, password });
-    // token comes back with Bearer included. Stripping it out so it's standard.
     const token = result.headers.authorization?.replace('Bearer ', '');
 
     if (!token) {
@@ -122,7 +101,6 @@ export class AuthStore implements IAuthStore {
         throw new Error('No refresh token returned.');
       }
 
-      //this.biometricService.validateBiometricByLoginWithCredentials();
       await AccessTokenProvider.setAccessToken(new AccessToken(token, refreshToken));
     }
     return result.data;
@@ -143,7 +121,6 @@ export class AuthStore implements IAuthStore {
       throw new Error('No refresh token returned');
     }
 
-    //this.biometricService.validateBiometricByLoginWithCredentials();
     await AccessTokenProvider.setAccessToken(new AccessToken(token, refreshToken));
     this.setSignUpInProgress(false);
     return true;
@@ -173,34 +150,10 @@ export class AuthStore implements IAuthStore {
       throw new Error('No refresh token returned');
     }
 
-    //this.biometricService.validateBiometricByLoginWithCredentials();
     await AccessTokenProvider.setAccessToken(new AccessToken(token, refreshToken));
   }
 
-  /* async initiateResetPassword(data: ForgotPasswordData): Promise<string> {
-    await this.ensureInitialized();
-    const result = await AUTH.initiateResetPassword({ username: data.username, birthDate: data.birthDate });
-    const token = result.headers.authorization?.replace('Bearer ', '');
-    return token;
-  } */
-
-  async verifyResetPassword(code: string, token: string): Promise<string> {
-    await this.ensureInitialized();
-    const result = await AUTH.verifyResetPassword(code, token);
-    const tokenResult = result.headers.authorization?.replace('Bearer ', '');
-    return tokenResult;
-  }
-
-  /* async resetPassword(data: ForgotPasswordData, token: string): Promise<void> {
-    await this.ensureInitialized();
-    await AUTH.resetPassword({ password: data.password }, token);
-  } */
-
   async logout(): Promise<void> {
-    /* if (await GoogleSignin.isSignedIn()) {
-      GoogleSignin.signOut();
-    }
-    this.plaidService.resetDependencies(new NonAdvicedPlaidStore(), new NonAdvicedRealEstateStore()); */
     await this.clearAccessTokens();
     /* await this.asyncStorage.deleteItem(APPLICATION_EVENTS_STORE_DATA_KEY);
     await this.asyncStorage.deleteItem(LOGGING_APPLICATION_STORE_DATA_KEY); */

@@ -17,16 +17,16 @@ const Investments = () => {
     }, [])
     
   return (
-  <div>
-    {
-
-    investments ? investments.map((investment) => (
+    investments.length ? 
         <div>
-            <Typography>{investment.name}</Typography>
+            {investments.map((investment) => (
+            <div>
+                <Typography>{investment.name}</Typography>
+            </div>
+            ))}
         </div>
-        )) : null
-    }
-  </div>)
+        : 
+        <div>No accounts</div>)
 }
 
 export default Investments
