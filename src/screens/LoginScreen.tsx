@@ -8,13 +8,14 @@ const LoginScreen = () => {
   const [password, setPassword] = useState<string | undefined>()
   const [error, setError] = useState<string | undefined>(undefined)
 
-  const onSubmit = async () => {
+  const onSubmit = async (e: React.SyntheticEvent) => {
+    e.preventDefault();
     try {
       if (email && password) {
         await authStore.attemptLogin(email, password)
       }
-    } catch (e) {
-      setError((e as Error).message)
+    } catch (err) {
+      setError((err as Error).message)
     }
   }
 

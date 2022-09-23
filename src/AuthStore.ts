@@ -103,7 +103,7 @@ export class AuthStore implements IAuthStore {
   }
 
   async attemptLogin(username: string, password: string): Promise<LoginResultRest> {
-    await this.ensureInitialized();
+    // await this.ensureInitialized();
     await this.clearAccessTokens();
     const result = await AUTH.login({ username, password });
     // token comes back with Bearer included. Stripping it out so it's standard.
