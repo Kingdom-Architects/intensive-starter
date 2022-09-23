@@ -28,6 +28,7 @@
     "react-scripts": "5.0.1",
     "react-toast-notifications": "^2.5.1",
     "rxjs": "^7.5.6",
+    "testcafe": "^2.0.0",
     "typescript": "^4.8.2",
     "web-vitals": "^2.1.4"
   },
